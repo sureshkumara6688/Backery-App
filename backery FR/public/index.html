@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+	<title></title>
+</head>
+
+<body>
+	<div class="bg">
+		<div class="firstbox">
+			<h1 class="heading">Bakery Menu</h1>
+		
+		<div class="menubox" id="productnames">
+		</div></div>
+		</div>
+		<div class="endbox">
+			<p>
+				<a href="https://nicepage.com/website-templates">
+					<span>Website Templates</span></a>
+				<span class="m">created with </span>
+				<a href="#"><span>Website Builder Software</span></a>
+		</div>
+	</div>
+</body>
+<script>
+	const getproducstList = "http://localhost:9090/api/backery/products"
+	getproduct();
+	function getproduct() {
+		fetch(getproducstList).then(response => response.json())
+			.then(products => {
+				console.log(products)
+				var output = ""
+				products.forEach((values,index) => {
+					output += `<div class="box">
+	 	<img src="http://localhost:9090/images/${values.FoodImage}" width="100px"height="100px" alt="bread"><br>
+		<h2 class="menu${index+1}">${values.FoodName}</h2>
+		<p class="menuexpalin1">${values.DescriPtion}</p>
+		<a  href="https:nicepage.com/c/team-html-templates">${values.Price}</a></diV>`
+				})
+				document.getElementById("productnames").innerHTML = output;
+				console.log(productnames)
+			})
+	}
+</script>
+
+</html>

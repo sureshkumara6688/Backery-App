@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localhost:3009</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    
+    <div class="containter">
+        <div class="left">
+            <h1>BACKERY FOODS</h1>
+            <ul class="menu">
+                <li id="foodListNav"><a onclick="selectionMenu('foodList')"> Food Lists</a></li>
+                <li id="addfoodNav"><a onclick="selectionMenu('addfood')">Add Food </a></li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="foodList" id="foodList">
+                <h2>Food Lists</h2>
+                <table id="productnames">
+                    <tr>
+                        <td>Foodname</td>
+                        <td>price</td>
+                        <td>quantity</td>
+                        <td>Food image</td>
+                        <td>Description</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="addfood" id="addfood">
+                <div class="right">
+                    <h2>Add FoodProduct</h2>
+                    <form onsubmit="addfunction(event)" id="form">
+                        <label for="fname">Foodname:</label>
+                        <input type="text" id="Foodname" /><br><br>
+                        <label for="fname">price:</label>
+                        <input type="number" id="price" /><br><br>
+                        <label for="fname">Quantity:</label>
+                        <input type="number" id="quntity" /><br><br>
+                        <label for="fname">Description:</label>
+                        <textarea type="textbox" rows="10" cols="5" id="Description"> </textarea><br><br>
+                        <input type="file" name="file" />
+                        <button type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div></div>
+        <script>
+            const foodList = document.getElementById("foodList");
+            const addfood = document.getElementById("addfood")
+            const foodListNav = document.getElementById("foodListNav");
+            const addfoodNav = document.getElementById("addfoodNav");
+    
+             function selectionMenu(menuSelected) {
+                try {
+                    foodListNav.removeAttribute("class", "selected");
+                addfoodNav.removeAttribute("class", "selected");
+    
+                switch (menuSelected) {
+                    case 'foodList':
+                        foodListNav.setAttribute("class", "selected");
+                        foodList.style.display = "block";
+                        addfood.style.display = "none";
+                        break;
+                    case 'addfood':
+                        addfoodNav.setAttribute("class", "selected");
+                        foodList.style.display = "none";
+                        addfood.style.display = "block";
+                        break;
+                }
+                } catch (error) {
+                    console.log(error)
+                }
+                
+            }
+          
+            const productmany = "http://localhost:9090/api/backery/addproduct";
+            const getproducstList = "http://localhost:9090/api/backery/products"
+            const deleteList = "http://localhost:9090/api/backery/delete1"
+            const EditList = "http://localhost:9090/api/backery/edit"
+    
+            const form = document.getElementById("form");
+            function addfunction(e) {
+                e.preventDefault();
+                const Foodname = form.elements['Foodname'].value;
+                const price = form.elements['price'].value;
+                const quntity = form.elements['quntity'].value;
+                const Description = form.elements['Description'].value;
+    
+                const formData = new FormData(form);
+    
+                formData.append('FoodName', Foodname)
+                formData.append('Price', price)
+                formData.append('DescriPtion', Description)
+                formData.append('Quntity', quntity)
+    
+                const optionsvalue = {
+                    method: "POST",
+                    body: formData,
+                }
+                fetch(productmany, optionsvalue)
+                    .then(response => response.json())
+                    .then(json => {
+                        console.log(json)
+                    });
+            }
+            getproduct();
+            function getproduct() {
+                fetch(getproducstList).then(response => response.json())
+                    .then(products => {
+                        console.log(products)
+                        let getproductnav = '';
+                        products.forEach(values => {
+    
+                            const node = document.createElement("tr");
+    
+                            const nodeImageTd = document.createElement("td");
+                            const nodeImages = document.createElement("img");
+                            nodeImages.src =  values.foodimage
+                            nodeImages.width = "150";
+                            nodeImages.height = "150";
+    
+                            const nodeNextProduct = document.createElement("td");
+                            const productName = document.createTextNode(values.FoodName);
+    
+                            const nodeNextPrice = document.createElement("td");
+                            const price = document.createTextNode(values.Price);
+    
+                            const nodeNextQuantity = document.createElement("td");
+                            const quantity = document.createTextNode(values.Quntity);
+                        
+                            const nodeNextDescription = document.createElement("td");
+                            const Description = document.createTextNode(values.DescriPtion);
+                            
+                            const nodeNextDelete = document.createElement("td");
+    
+                            const nextDeleteA = document.createElement("a");
+                            const deleteIcon = document.createElement("i");
+                            deleteIcon.classList = "fa fa-trash delete-icon"
+                            nextDeleteA.classList = "delete-product";
+    
+                            nextDeleteA.addEventListener('click', function handleClick() {
+                                deleteProduct(values._id);
+    
+                            });
+                            const nodeNextEdit = document.createElement("td");
+    
+                            const nextEdit = document.createElement("a");
+                            const EditIcon = document.createElement("i");
+                            EditIcon.classList = "fa fa-edit Edit-icon"
+                            nextEdit.classList = "Edit-product";
+    
+                            nextEdit.addEventListener('click', function handleClick() {
+                                EditProduct(values.FoodName);
+    
+                            });
+    
+                            nodeNextProduct.appendChild(productName);
+                            nodeNextPrice.appendChild(price);
+                            nodeNextQuantity.appendChild(quantity);
+                            nodeImageTd.appendChild(nodeImages)
+    
+                            nodeNextDescription.appendChild(Description)
+                            nextDeleteA.appendChild(deleteIcon)
+                            nodeNextDelete.appendChild(nextDeleteA)
+    
+                            nextEdit.appendChild(EditIcon)
+                            nodeNextEdit.appendChild(nextEdit)
+    
+                            node.appendChild(nodeNextProduct);
+                            node.appendChild(nodeNextPrice);
+                            node.appendChild(nodeNextQuantity);
+                            node.appendChild(nodeImageTd);
+                            node.appendChild(nodeNextDescription);
+                            node.appendChild(nodeNextEdit);
+                            node.appendChild(nodeNextDelete);
+    
+                            document.getElementById('productnames').appendChild(node)
+                
+                        });
+                    });
+            }
+            function EditProduct(editid) {
+                console.log(editid);
+                const payLoad = {
+                    edit: editid,
+                }
+                const optionedit = {
+                    method: "PUT",
+                    body: req.body.stringify(payLoad),
+                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                }
+                fetch(EditList, optionedit).then(response => response.json())
+                    .then(json => {
+                        console.log(json);
+                    }).catch(err => {
+                        console.log(err)
+                    })
+            }
+            function deleteProduct(deleteId) {
+                console.log(deleteId);
+                const payLoad = {
+                    delete1: deleteId,
+                }
+                const optionsvalue = {
+                    method: "DELETE",
+                    body: JSON.stringify(payLoad),
+                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                }
+                fetch(deleteList, optionsvalue)
+                    .then(response => response.json())
+                    .then(json => {
+                        console.log(json)
+                    });
+            }
+        </script>
+</body>
+
+</html>

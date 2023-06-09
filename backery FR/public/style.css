@@ -1,0 +1,122 @@
+html,
+body {
+	margin: 0;
+	background-image: url("./ggg-min1.jpg");
+}
+.heading {
+	font-family: 'Times New Roman', Times, serif;
+	line-height: 30px;
+	text-align: center;
+	color: rgb(9, 233, 245);
+    margin-top: 30px;
+	text-transform: uppercase;
+}
+.firstbox {
+	height: 300px;
+}
+.bg {
+	position: relative;
+	min-height: 600px;
+}
+.menubox{
+	display: flex;
+	position: absolute;
+	top: 130px;
+	left: 0;
+}
+span {
+	color: violet;
+}
+.secoundbox h2 {
+	box-shadow: 10px 10px;
+}
+.menu1 {
+	text-align: center;
+	justify-content: center;
+}
+.menuexpalin1 {
+	text-align: center;
+	font-family: Courier;
+	line-height: 1.6;
+}
+.menubox a {
+	text-align: center;
+	font-family: italic;
+	text-align: center;
+	text-decoration: none;
+}
+.thirdbox h2 {
+	box-shadow: 10px 10px;
+}
+.menu2 {
+	text-align: center;
+	justify-content: center;
+}
+.menuexpalin2 {
+	text-align: center;
+	font-family: Courier New;
+	line-height: 1.6;
+}
+.box {
+	box-sizing: border-box;
+	border-radius: 10px;
+	margin: 10px;
+	width: 450px;
+	background-color: #e5fff9;
+	box-shadow: 5px 0px 5px;
+	min-height: 450px;
+	bottom: 150px;
+	text-align: center;
+	padding: 10px;
+}
+.box a {
+	text-align: center;
+	font-weight: 800;
+}
+.forthbox h2 {
+	box-shadow: 10px 10px;
+}
+.menu3 {
+	text-align: center;
+	justify-content: center;
+}
+.menuexpalin3 {
+	text-align: center;
+	font-family: Courier New;
+	line-height: 1.6;
+}
+.fifthbox h2 {
+	box-shadow: 10px 10px;
+}
+.menu4 {
+	text-align: center;
+}
+.menuexpalin4 {
+	text-align: center;
+	font-family: Courier New;
+	line-height: 1.6;
+}
+.freepik {
+	text-align: center;
+	font-family: garamond-bold-italic;
+	font-size: 20px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+.endbox {
+	text-align: center;
+	background-color: rgb(64, 131, 240);
+	padding: 10px;
+	text-decoration: none;
+}
+a{
+	text-decoration: none;
+}
+.m {
+	color: white;
+}
+.box img {
+	height: 70px;
+	width: 50px;
+}
